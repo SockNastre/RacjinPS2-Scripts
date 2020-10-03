@@ -29,7 +29,7 @@ if int.from_bytes(raw.read(4), byteorder='little') != 0:
 raw.seek(8)
 sectionCount = int(int.from_bytes(raw.read(4), byteorder='little') / sectionMetaSize)
 
-for i in range(0, sectionCount):
+for i in range(sectionCount):
     raw.seek(i * 16)
     s = Section(int.from_bytes(raw.read(4), byteorder='little'), int.from_bytes(raw.read(4), byteorder='little'), int.from_bytes(raw.read(8), byteorder='little'))
     sections.append(s)
