@@ -1,5 +1,8 @@
 # Made by SockNastre
 # Encodes text file as bytes, based on NUC encoding method for text
+#
+# NOTE: UTF-8 encoding expected from text file, encoding may be changed on line 113.
+#
 
 import os, sys
 
