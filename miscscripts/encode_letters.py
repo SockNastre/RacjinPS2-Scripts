@@ -5,8 +5,8 @@ import os, sys
 
 def get_encoded_int_from_char(char):
     return{
-		' ' : 0x0000,
-		'0' : 0x0001,
+        ' ' : 0x0000,
+        '0' : 0x0001,
         '1' : 0x0002,
         '2' : 0x0003,
         '3' : 0x0004,
