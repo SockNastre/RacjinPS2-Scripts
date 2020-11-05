@@ -10,6 +10,6 @@ If you want to get into contact with anyone involved with these scripts, the bes
 Drag and drop decompressed .raw file onto the script file, it will output the unpacked assets (or "sections") from the archive into the same folder as the decompressed .raw file.
 
 ### raw_text_parse.bat / parse_raw_text.py
-Drag and drop decompressed .raw text file (with asset, "section", metadata or not) onto script. In the same folder a .txt file of the same name will generate with the decoded text.
+Drag and drop decompressed .raw text file (with asset, "section", metadata or not) onto script. In the same folder a .txt file of the same name will generate with the decoded text. Doesn't work on all .raw text files due to occasional metadata structure changes or other complex factors.
 
 Thanks to those on the [Naruto Classic's Discord](https://discord.gg/jhKmg97) (such as William Vaz, Theus, NarutoClassics, and more) for creating the encoding table for the text encoding used in these games.
