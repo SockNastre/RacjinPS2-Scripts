@@ -1,5 +1,5 @@
 # Made by SockNastre
-# Parses .raw text files into .txt , only works with some .raw text files
+# Parses .raw text files into utf-8 .txt , only works with some .raw text files
 
 import os, sys
 
@@ -151,5 +151,5 @@ pre, ext = os.path.splitext(path)
 outputPath = pre + ".txt"
 
 # Outputs parsed .raw text file
-with open(outputPath, 'w') as txt:
+with open(outputPath, 'w', encoding='utf-8') as txt:
     txt.write(parsedData)
