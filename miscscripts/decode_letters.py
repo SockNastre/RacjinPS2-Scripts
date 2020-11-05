@@ -1,5 +1,8 @@
 # Made by SockNastre
-# Parses .raw text files into .txt , only works with some .raw text files
+# Decodes encoded text bytes into text file, based on NUC encoding method for text
+#
+# NOTE: Output text file will be encoded with UTF-8, this may be changed on line 130.
+#
 
 import os, sys
 
@@ -101,55 +104,30 @@ def get_letter_from_encoding(encodedCharBytes):
         0x005D : 'À',
         0x005E : 'Á',
         0x005F : 'Ê',
-        0x0060 : 'Í'
+        0x0060 : 'Í',
+        0x8000 : '\n' # Text section terminator, AKA end of line
 	}.get(encodedCharBytes, "0x" + encodedCharBytes.to_bytes(2, 'little').hex())
 
-# Path of inputted file
+# Path and size of inputted file
 path = sys.argv[1]
-rawText = open(path , 'rb')
+fileSize = os.path.getsize(path)
+encodedText = open(path , 'rb')
 
-# If text is extracted from .raw
-isExtracted = True
+# Size of file needs to be at least 2 or greater, since tool reads entire file as shorts
+if fileSize >= 2:
+    # Decoded text that will be output from this tool
+    parsedData = ""
 
-# Checks if inputted text is still contained in .raw
-if int.from_bytes(rawText.read(4), 'little') == 0:
-    isExtracted = False
-    rawText.seek(4, 1) # Goes to, potentially, section offset
+    while fileSize - encodedText.tell() >= 2:
+        encodedCharBytes = int.from_bytes(encodedText.read(2), 'little')
+        parsedData += get_letter_from_encoding(encodedCharBytes)
 
-    if int.from_bytes(rawText.read(4), 'little') != 16:
-        isExtracted = True
+    # Splits extension from path
+    pre, ext = os.path.splitext(path)
+    outputPath = pre + ".txt"
 
-# How many bytes to skip at the beginning of the file
-initialSkipCount = 0
-
-if isExtracted == False:
-    # Where text data would begin
-    initialSkipCount = 16
-
-# Header reading
-rawText.seek(initialSkipCount)
-sectionCount = int.from_bytes(rawText.read(4), 'little')
-sectionOffsetArray = []
-
-for i in range(sectionCount):
-	sectionOffsetArray.append(int.from_bytes(rawText.read(4), 'little'))
-
-sectionTerminator = 0x8000 # Designates end of section
-parsedData = "" # Decoded text that will be output from this tool
-
-for sectionOffset in sectionOffsetArray:
-	rawText.seek(initialSkipCount + sectionOffset)
-	encodedCharBytes = int.from_bytes(rawText.read(2), 'little')
-
-	while encodedCharBytes != sectionTerminator:
-		parsedData += get_letter_from_encoding(encodedCharBytes)
-		encodedCharBytes = int.from_bytes(rawText.read(2), 'little')
-	parsedData += '\n'
-
-# Splits extension from path
-pre, ext = os.path.splitext(path)
-outputPath = pre + ".txt"
-
-# Outputs parsed .raw text file
-with open(outputPath, 'w') as txt:
-    txt.write(parsedData)
+    # Outputs parsed text file
+    with open(outputPath, 'w', encoding='utf-8') as txt:
+        txt.write(parsedData)
+else:
+    print("Error: Inputted file less than 2 bytes long.")

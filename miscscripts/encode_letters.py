@@ -140,7 +140,7 @@ for line in text:
 pre, ext = os.path.splitext(path)
 outputPath = pre + ".bytes"
 
-# Outputs parsed .raw text file
+# Outputs encoded text file
 with open(outputPath, 'wb') as bytesFile:
 	for encodedInt in encodedIntArray:
                 bytesFile.write(encodedInt.to_bytes(2, 'little'))
