@@ -1,0 +1,27 @@
+#
+# RAW Archive Format
+# By: SockNastre
+#
+# Associated Documents: raw_structs.cs
+#
+# All information in this document (plus associated documents above) is 
+# free to use as you wish.
+#
+
+NOTE: Make sure to follow reading this along with raw_structs.cs :D
+
+It is debatable if the .raw file format is an archive or not, originally
+I referred to it's separation of data as "sections" however the file format
+is more akin to an archive in the way it stores data so I consider it that.
+
+RAW Structure:
+	1. Section Records
+
+First record's index is always 0, that is a good way of identifying a
+this archive. If you notice the first 4 bytes of what seems to be .raw
+archive is not 0 then it may not be .raw or is compressed still.
+
+	2. Data
+
+Raw data that is stored, with the Section Records pointing to places
+in here.
