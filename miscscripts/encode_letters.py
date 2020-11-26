@@ -105,6 +105,7 @@ def get_encoded_int_from_char(char):
         'Á' : 0x005e,
         'Ê' : 0x005f,
         'Í' : 0x0060,
+	'õ' : 0x0061,
         '\n' : 0x8000 # Text section terminator, AKA end of line
     }.get(char, 0x4F4E)
 
