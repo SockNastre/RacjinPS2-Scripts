@@ -105,6 +105,7 @@ def get_letter_from_encoding(encodedCharBytes):
         0x005E : 'Á',
         0x005F : 'Ê',
         0x0060 : 'Í',
+	0x0061 : 'õ',
         0x8000 : '\n' # Text section terminator, AKA end of line
 	}.get(encodedCharBytes, "0x" + encodedCharBytes.to_bytes(2, 'little').hex())
 
